@@ -5,7 +5,6 @@ var lettersInMovie = [];
 var numberBlanks = 0;
 var movieBlanks = [];
 var lettersGuessed = [];
-// var previousMovie = [];
 
 // Game variables
 var winsCounter = 0;
@@ -13,11 +12,13 @@ var lossCounter = 0;
 var guessLeft = 12;
 
 // Movie Guess function
-function guessMovie () {
+function guessMovie() {
+
     selectedMovie = movieOptions[Math.floor(Math.random() * movieOptions.length)];
     // Want to add logic to not repeat movies and to go through full array
     lettersInMovie = selectedMovie.split("");
     numberBlanks = lettersInMovie.length;
+
 
     guessLeft = 12;
     lettersGuessed = [];
@@ -36,16 +37,16 @@ function guessMovie () {
 
 function compareLetters(letters) {
     var compareMovieLetters = false;
-    
+
     for (var i = 0; i < numberBlanks; i++) {
-        if(selectedMovie[i] == letters) {
-            compareMovieLetters = true; 
+        if (selectedMovie[i] == letters) {
+            compareMovieLetters = true;
         }
     }
 
-    if(compareMovieLetters) {
+    if (compareMovieLetters) {
         for (var i = 0; i < numberBlanks; i++) {
-            if(selectedMovie[i] == letters) {
+            if (selectedMovie[i] == letters) {
                 movieBlanks[i] = letters;
             }
         }
@@ -61,7 +62,7 @@ function roundComplete() {
     document.getElementById("selectedMovie").innerHTML = movieBlanks.join(" ");
     document.getElementById("guessFar").innerHTML = lettersGuessed.join(" , ");
 
-    if(lettersInMovie.toString() == movieBlanks.toString()) {
+    if (lettersInMovie.toString() == movieBlanks.toString()) {
         winsCounter++;
         alert("You won!");
         document.getElementById("winsCounter").innerHTML = winsCounter;
@@ -78,7 +79,7 @@ function roundComplete() {
 
 function showPreviousMovie() {
     var movieText = document.createElement("p");
-    var previousMovie = document.createTextNode(selectedMovie + " , ");
+    var previousMovie = document.createTextNode(selectedMovie + ", ");
 
     movieText.appendChild(previousMovie);
     document.getElementById("previousMovie").appendChild(previousMovie);
@@ -86,7 +87,7 @@ function showPreviousMovie() {
     console.log(previousMovie);
 }
 
-guessMovie(); 
+guessMovie();
 
 document.onkeyup = function (event) {
     var lettersGuessed = String.fromCharCode(event.keyCode).toLowerCase();
