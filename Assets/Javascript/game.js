@@ -1,88 +1,93 @@
 // What the user sees when they first open page
-alert("Come play the Psychic Game!")
+alert("Come play the Word Guess Game!")
 
-//The alpabet the user can choose from
-var choices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+// The movies the user can choose from
+var movies = ["Transformers", "Maleficent", "Vertigo", "Jumanji", "Frozen", "Labyrinth", "Gravity", "Scream", "Skyfall", "Ratatouille", "Disturbia", "Bewitched", "Goodfellas", "Gladiator", "Alien", "Grease", "Titanic", "Braveheart", "Shrek", "Braveheart", "Godzilla"];
+var hiddenMovie = [];
 
-//Starting values for wins, losses and how many guesses are left
-var wins = 0;
-var losses = 0;
-var guessLeft = 10;
+// Starting values for wins, losses, guesses, how many guesses are left and what has been guessed so far
+var winsCounter = 0;
+var lossCounter = 0;
+var guesses = 0;
+var guessLeft = 15;
 var guessFar = [];
 
-var userChoiceText = document.getElementById("userchoice-text");
-var winsText = document.getElementById("wins");
-var lossesText = document.getElementById("losses");
-var guessLeftText = doucment.getElementById("guessLeft");
-var guessFarText = document.getElementById("guessFar");
+// Other variables
+var wordLngth;
+var alert = {
+    win: "You won!",
+    loss: "You lost!",
+    guess: "You have already guessed that letter!",
+    validLetters: "Please choose a valid letter!"
+}
+var letters = "abcdefghijklmnopqrstuvwxyz";
+var validChoice = false;
 
-//Randomize the computer's choice
-var computerChoice = choices[Math.floor(Math.random() * choices.length)];   
-    
-//Log it so I can see
-console.log(computerChoice);
+var alreadyGuessed = false;
+var correctLetter = false;
+var currentMovie;
 
-//Trying to assign the random numbers to letters... this may or may not work
-function guessed() {
-    computerChoice = choices[Math.floor(Math.random() * choices.length)];
-    console.log(computerChoice);
+// Function for guessing movie
+function newMovie() {
+    wordLngth = Math.floor((Math.random() * movies.length));
+    currentMovie = movies[wordLngth];
+    console.log(currentMovie);
+
+    if (hiddenMovie.length !== currentMovie.length) {
+        hiddenMovie= [];
+    }
+
+    //Make blanks for length of movie
+    for (var i = 0; i < currentMovie.length; i++) {
+        if (currentMovie[i] === " ") {
+            hiddenMovie[i] = " ";
+        } else {
+            hiddenMovie[i] = (" _ ");
+        }
+    }
+    $("#hiddenMovie").html(hiddenMovie);
 }
 
-//When the user presses a key to start the game....
-document.onkeypress = function(event) {
+document.onkeyup = function(event) {
+    var userGuessed = String.fromCharCode(event.keyCode).toLocaleLowerCase();
+    var key = event.keyCode;
 
-    //Capture the user choice
-    var userChoice = event.key;
+    // After too many guesses, get new movie
+    if (key == 16) {
+        newMovie();
+    }
 
-    //Whatever the user choice is, make it lowercase
-    var userChoice = String.fromCharCode(event.keyCode).toLowerCase();
-    
-    //Log it so I can see
-    console.log(userChoice);
-
-    //Compare the user's choice to the computer's
-    if(userChoice === computerChoice) {
-        wins++;
-        attempts = 10;
-        guessFar = [];
-        } 
-        //Remove a guess if it is not the same
-            else {
-                guessLeft--;
-            }
-        // When guess left equals 0, user gets a Loss
-            if(guessLeft === 0) {
-                losses++
-            }
+    for (var i = 0; i < letters.length; i++) {
+        if (userGuessed === letters.charAt(i)) {
+            validChoice = true;
         }
-    
-    // If user choice is not the same as computer..
-    guessed();
-    if (guessLeft === 0) {
-        losses++;
-        guessFar = []
-        attempts = 10;
     }
 
-    if (guessFar.indexOf(userChoice) >=0) {
-
-    }   else {
-        guessFar.push(userChoice);
-        document.getElementById("userChoice").innerHTML = guessFar;
+    if (validChoice == false && key != 16) {
+        $("#alert").html(alert.validLetters);
     }
-    
-    //Display the wins, losses, guesses left, and what the user has chosen so far...
-    userChoiceText.textcontent = "You chose" + userChoice;
-    winsText.textContent = "wins: " + wins;
-    lossesText.textContent = "losses: " + losses;
-    guessLeftText.textContent = "guessLeft" - 1;
-    guessFarText.textContent = "guessFar" + userChoice;
 
-    document.getElementById('wins').innerHTML = wins;
-    document.getElementById('losses').innerHTML = losses;
-    document.getElementById('guessLeft').innerHTML = guessLeft;
-    document.getElementById('guessFar').innerHTML = guessFar;
-    
+    // Letter guessed, send alert
+    for (var i = 0; i < guessFar.length; i++) {
+        if (userGuessed === guessFar[i]) {
+            alreadyGuessed = true;
+        }
+    }
+
+    if (alreadyGuessed == true) {
+        $("#alert").html(alert.guess);
+    }
+
+   for (var i = 0; i < currentMovie.length; i++) {
+       if (currentMovie[i] === userGuessed) {
+           hiddenMovie[i] = currentMovie[i];
+           correctLetter = true;
+       }
+   }
+
+   if (validChoice == true && alreadyGuessed == false && correctLetter == false) {
+       56   }
+}
 
 
 

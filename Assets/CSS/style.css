@@ -1,0 +1,39 @@
+body {
+    background-image: url("../Images/movies.jpg");
+}
+
+.jumbotron {
+    text-align: center;
+    padding: 15px;
+    border-radius: 25px;
+    border: 5px solid #795548;
+    /* background: #00796D; */
+    background: white;
+    color: #00796D;
+    opacity: .90;
+}
+
+#movieGuess {
+    text-align: center;
+    font-size: 30px;
+}
+
+.container {
+    padding: 15px;
+}
+
+.card {
+    font-size: 20px;
+    padding: 15px;
+    border-radius: 25px;
+    border: 5px solid #795548;
+    /* background: #00796D; */
+    background: white;
+    color: #00796D;
+    opacity: .90;
+}
+
+.card-header {
+    border: 1px solid white;
+    background: white;
+}
